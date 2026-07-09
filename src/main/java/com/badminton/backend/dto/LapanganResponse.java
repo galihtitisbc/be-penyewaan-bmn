@@ -33,4 +33,18 @@ public class LapanganResponse {
                 .isAktif(lapangan.getIsAktif())
                 .build();
     }
+
+    public static Lapangan toLapangan(LapanganResponse lapanganResponse) {
+        if (lapanganResponse == null) {
+            return null;
+        }
+        Lapangan lapangan = new Lapangan();
+        lapangan.setId(lapanganResponse.getId());
+        lapangan.setNamaLapangan(lapanganResponse.getNamaLapangan());
+        lapangan.setDeskripsi(lapanganResponse.getDeskripsi());
+        lapangan.setBiayaSewaPerJam(lapanganResponse.getBiayaSewaPerJam());
+        lapangan.setIsTersedia(lapanganResponse.getIsTersedia());
+        lapangan.setIsAktif(lapanganResponse.getIsAktif());
+        return lapangan;
+    }
 }

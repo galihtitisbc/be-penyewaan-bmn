@@ -53,4 +53,9 @@ public class UserServiceImpl implements UserService {
                         "User dengan username '" + username + "' tidak ditemukan."));
         return UserResponse.fromUser(user);
     }
+
+    @Override
+    public User getReferenceById(Long id) {
+        return userRepository.getReferenceById(id);
+    }
 }

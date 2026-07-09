@@ -19,11 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -97,7 +94,13 @@ public class AuthController {
 
         @PostMapping("/logout")
         public ResponseEntity<?> logoutUser() {
-                return ResponseEntity.ok(
-                                Map.of("message", "Logout."));
+                ResponseCookie deleteCookie = ResponseCookie.from("refresh_token", "")
+                                .httpOnly(true)
+                                .path("/api/auth/refresh-token")
+                                .maxAge(0)
+                                .build();
+                return ResponseEntity.ok()
+                                .header(HttpHeaders.SET_COOKIE, deleteCookie.toString())
+                                .body(Map.of("message", "Logout."));
         }
 }

@@ -59,7 +59,7 @@ public class LapanganServiceImpl implements LapanganService {
     @Override
     public LapanganResponse findById(Long id) {
         Lapangan lapangan = this.lapanganRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Data Tidak Ditemukan"));
+                .orElseThrow(() -> new ResourceNotFoundException("Data Lapangan Tidak Ditemukan"));
         return LapanganResponse.fromLapangan(lapangan);
     }
 
