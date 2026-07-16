@@ -24,6 +24,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                 JOIN FETCH b.user
                 JOIN FETCH b.lapangan
                 WHERE b.lapangan.id = :lapanganId
+                AND(b.statusBooking != 'CANCELLED' AND b.statusBooking != 'EXPIRED' AND b.statusBooking!= 'PAID')
             """)
     List<Booking> findByLapanganId(@Param("lapanganId") Long lapanganId);
 

@@ -1,12 +1,8 @@
 package com.badminton.backend.service;
 
-import com.badminton.backend.dto.PaymentRequest;
-import com.badminton.backend.dto.PaymentResponse;
+import com.badminton.backend.dto.TransactionTokenResponse;
+import com.badminton.backend.dto.midtrans.MidtransRequest;
 
 public interface PaymentService {
-    PaymentResponse prosesPembayaran(PaymentRequest request);
-
-    PaymentResponse getPembayaranByBookingId(Long bookingId);
-
-    void batalkanPembayaran(Long pembayaranId);
+    TransactionTokenResponse paymentProcess(MidtransRequest request);
 }

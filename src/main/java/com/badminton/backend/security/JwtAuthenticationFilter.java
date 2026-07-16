@@ -61,6 +61,7 @@ protected boolean shouldNotFilter(HttpServletRequest request) {
     return path.equals("/api/auth/login")
         || path.equals("/api/auth/refresh-token")
 	|| path.equals("/v3/api-docs")
+	|| path.equals("/swagger-ui/**")
 	|| path.equals("/swagger-ui/index.html");
 }
 }

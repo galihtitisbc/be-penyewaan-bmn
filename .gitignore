@@ -56,6 +56,8 @@ application-dev.properties
 application-prod.yml
 application-prod.properties
 application.properties
+src/main/resources/application-*.properties
+src/main/resources/application-*.yml
 ### Environment ###
 .env
 
