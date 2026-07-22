@@ -1,6 +1,6 @@
 package com.badminton.backend.dto.midtrans;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransactionDetails {
-    @JsonAlias("order_id")
+    @JsonProperty("order_id")
     private String orderId;
 
-    @JsonAlias("gross_amount")
+    @JsonProperty("gross_amount")
     private Long grossAmount;
 
 }

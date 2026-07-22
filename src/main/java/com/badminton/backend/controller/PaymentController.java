@@ -21,7 +21,6 @@ public class PaymentController {
 
     @PostMapping("/pay")
     public ResponseEntity<TransactionTokenResponse> payment(@Valid @RequestBody MidtransRequest request) {
-        System.out.println(request);
         return ResponseEntity.ok().body(paymentService.paymentProcess(request));
     }
 }
