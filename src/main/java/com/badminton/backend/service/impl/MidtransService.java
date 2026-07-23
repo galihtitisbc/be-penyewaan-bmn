@@ -1,33 +1,57 @@
 package com.badminton.backend.service.impl;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestTemplate;
 
 import com.badminton.backend.dto.midtrans.MidtransRequest;
-import com.midtrans.Midtrans;
-import com.midtrans.httpclient.SnapApi;
-import com.midtrans.httpclient.error.MidtransError;
-import java.util.Map;
-import lombok.RequiredArgsConstructor;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class MidtransService {
     @Value("${MIDTRANS_SERVER_KEY}")
     private String serverKey;
-    private final ObjectMapper objectMapper;
+    @Value("${MIDTRANS_URL}")
+    private String midtransUlr;
 
-    public String createTransaction(MidtransRequest request) throws MidtransError {
-        Midtrans.serverKey = serverKey;
-        Midtrans.isProduction = false;
+    private final RestTemplate restTemplate;
 
-        Map<String, Object> requestBody = objectMapper.convertValue(
-                request, new TypeReference<Map<String, Object>>() {
-                });
-        return SnapApi.createTransactionToken(requestBody);
+    public String createTransaction(MidtransRequest request) {
+
+        try {
+
+            HttpHeaders headers = new HttpHeaders();
+
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            headers.setBasicAuth(serverKey, "", StandardCharsets.UTF_8);
+
+            HttpEntity<MidtransRequest> entity = new HttpEntity<>(request, headers);
+
+            ResponseEntity<Map> response = restTemplate.exchange(
+                    midtransUlr,
+                    HttpMethod.POST,
+                    entity,
+                    Map.class);
+            return (String) response.getBody().get("token");
+        } catch (HttpStatusCodeException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+
+        }
+
     }
 }
